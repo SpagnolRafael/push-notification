@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,7 +28,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,19 +49,9 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCvQmacyzKXTiXvHgyvbC5_TdRQj0b3xAE',
-    appId: '1:770773510083:web:2efd7384964b76934c7f76',
-    messagingSenderId: '770773510083',
-    projectId: 'push-notification-14f95',
-    authDomain: 'push-notification-14f95.firebaseapp.com',
-    storageBucket: 'push-notification-14f95.appspot.com',
-    measurementId: 'G-MEZ0NSPSH1',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyACgo9xDuP7DVzi7KNDePxDcfYRY1z-YD0',
-    appId: '1:770773510083:android:a2f37a5684130e134c7f76',
+    appId: '1:770773510083:android:26f40864a7baaaa14c7f76',
     messagingSenderId: '770773510083',
     projectId: 'push-notification-14f95',
     storageBucket: 'push-notification-14f95.appspot.com',
@@ -63,21 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyC5JX08m3g9B5hvDLh_k2sCHOVXNzC1VuQ',
-    appId: '1:770773510083:ios:9125d6618b75aba74c7f76',
+    appId: '1:770773510083:ios:1e2a42b2370240cd4c7f76',
     messagingSenderId: '770773510083',
     projectId: 'push-notification-14f95',
     storageBucket: 'push-notification-14f95.appspot.com',
-    iosClientId: '770773510083-4qdbv8kvjj0untoijuli5mb7iha7jhsv.apps.googleusercontent.com',
-    iosBundleId: 'com.example.pushNotification',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyC5JX08m3g9B5hvDLh_k2sCHOVXNzC1VuQ',
-    appId: '1:770773510083:ios:9125d6618b75aba74c7f76',
-    messagingSenderId: '770773510083',
-    projectId: 'push-notification-14f95',
-    storageBucket: 'push-notification-14f95.appspot.com',
-    iosClientId: '770773510083-4qdbv8kvjj0untoijuli5mb7iha7jhsv.apps.googleusercontent.com',
-    iosBundleId: 'com.example.pushNotification',
+    iosClientId: '770773510083-u86s24o54l9muk5ficvjkufdotl8mra4.apps.googleusercontent.com',
+    iosBundleId: 'QT8Y4SHX9T.pt.nossafarmacia',
   );
 }

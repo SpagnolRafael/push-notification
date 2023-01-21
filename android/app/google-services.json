@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:770773510083:android:a2f37a5684130e134c7f76",
+        "mobilesdk_app_id": "1:770773510083:android:26f40864a7baaaa14c7f76",
         "android_client_info": {
-          "package_name": "com.example.push_notification"
+          "package_name": "QT8Y4SHX9T.pt.nossafarmacia"
         }
       },
       "oauth_client": [
@@ -29,6 +29,13 @@
             {
               "client_id": "770773510083-88l563frtmt6tjlmgqlosgil4r5of70n.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "770773510083-4qdbv8kvjj0untoijuli5mb7iha7jhsv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.pushNotification"
+              }
             }
           ]
         }

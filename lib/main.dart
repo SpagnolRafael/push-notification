@@ -8,7 +8,9 @@ import 'firebase_options.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 Future<void> onBackgroundMessage(RemoteMessage message) async {
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   Notifications.showTextNotification(
       title: message.notification?.title ?? '',
       body: message.notification?.body ?? '',
