@@ -8,6 +8,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:push_notification/app_colors.dart';
 import 'package:push_notification/demand_page.dart';
 import 'package:push_notification/notifications.dart';
 
@@ -74,10 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String errorMsg = '';
   Future<void> fcmMessage() async {
     final token = await messaging.getToken();
-    await database
-        .collection('users')
-        .doc(auth.currentUser?.uid)
-        .set({'deviceToken': token, 'iOS': Platform.isIOS});
+    //TODO: add authorization status
     deviceToken = token;
     print('token: $token');
     FirebaseMessaging.onMessage.listen((message) {
@@ -93,6 +91,14 @@ class _MyHomePageState extends State<MyHomePage> {
           duration: const Duration(seconds: 10),
         ));
       print('$notificationTitle | $notificationDescription');
+    });
+  }
+
+  void createCollection() async {
+    await database.collection('users').doc(auth.currentUser?.uid).set({
+      'deviceToken': await messaging.getToken(),
+      'iOS': Platform.isIOS,
+      'email': auth.currentUser!.email,
     });
   }
 
@@ -120,9 +126,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -130,10 +133,11 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               const Text(
-                'Login Screen',
+                'Login',
               ),
               const SizedBox(height: 20),
               TextFormField(
+                  autocorrect: false,
                   onChanged: (value) {
                     setState(() {
                       errorMsg = '';
@@ -143,6 +147,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   decoration: const InputDecoration(hintText: 'e-mail')),
               const SizedBox(height: 20),
               TextFormField(
+                  autocorrect: false,
+                  obscureText: true,
                   onChanged: (value) {
                     setState(() {
                       errorMsg = '';
@@ -162,6 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: login,
+        backgroundColor: AppColors.green,
         tooltip: 'Login',
         child: const Icon(Icons.login),
       ),
@@ -173,7 +180,9 @@ class _MyHomePageState extends State<MyHomePage> {
         .signInWithEmailAndPassword(
             email: emailController.text.trim(),
             password: passController.text.trim())
-        .catchError((e) {
+        .then((value) {
+      if (auth.currentUser != null) createCollection();
+    }).catchError((e) {
       setState(() {
         errorMsg = 'Usuario ou senha não localizado';
       });

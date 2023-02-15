@@ -26,7 +26,7 @@ class Notifications {
       'my_custom_id',
       'my_custom_channel',
       playSound: true,
-      sound: RawResourceAndroidNotificationSound('custom_sound'),
+      sound: RawResourceAndroidNotificationSound('ambulance'),
       importance: Importance.max,
       priority: Priority.high,
     );

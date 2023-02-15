@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:push_notification/app_colors.dart';
 import 'package:push_notification/demand_dto.dart';
 
 class DemandPage extends StatefulWidget {
@@ -30,7 +31,11 @@ class _DemandPageState extends State<DemandPage> {
         .get();
 
     final docs = userDB.docs;
-    docs.map((json) => demands.add(DemandDto.fromJson(json.data()))).toList();
+    demands = [];
+    docs
+        .map((json) => demands.add(DemandDto.fromJson(json.data())))
+        .toSet()
+        .toList();
     setState(() {});
     print(widget.token);
     print(demands);
@@ -46,10 +51,16 @@ class _DemandPageState extends State<DemandPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pedidos'),
+        backgroundColor: AppColors.green,
+        title: const Text('Tickets'),
         centerTitle: true,
         actions: [
-          IconButton(onPressed: () => init(), icon: const Icon(Icons.refresh))
+          IconButton(onPressed: () => init(), icon: const Icon(Icons.refresh)),
+          const SizedBox(width: 20),
+          IconButton(
+              onPressed: () async =>
+                  await auth.signOut().then((value) => Navigator.pop(context)),
+              icon: const Icon(Icons.logout)),
         ],
         automaticallyImplyLeading: false,
       ),
@@ -97,9 +108,13 @@ class MyCard extends StatelessWidget {
             border: Border.all(color: Colors.black),
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Pedido numero ${demand!.id} em aberto'),
-              const Text('Clique para encerrar a notificacao'),
+              Text(
+                'Ticket número ${demand!.id}',
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const Text('Clique para encerrar a notificação'),
             ],
           ),
         ),
